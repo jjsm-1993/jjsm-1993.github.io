@@ -4,7 +4,7 @@ function getParam(...names){ for(const n of names){ const v = qs.get(n); if(v!==
 // === CONFIG WhatsApp (SOLO DEMO; el token queda visible en el front) ===
 // ⚠️ Reemplaza por tus valores reales
 const WA_PHONE_NUMBER_ID = '647681155100386';  // tu phone_number_id
-const WA_TOKEN = 'EAACom8rnztUBPKTuf0XRllei80r927kO0jM5C3fSLvGYoyDxI033ZBXXgudcsVoVqC1zFOOQxvZCY4eyHstdlBlwveI1Uq6QIHxXtqVUvNUl4BBfZBdfzKxPV1Qp6ULecddnCpOpBcVOXfCom3ArAF3hfQiP7rEMCHBBcKGeOykg2yoQZAqcDznw6UEvAxGyB8EGpZBgarWLT9B47ajv9fhILYpDPlp9ziUwzjcFZCTlG747splnitSATeF5ob9wZDZD';           // tu token de acceso
+const WA_TOKEN = 'EAACom8rnztUBPPZBjiUa3ObUV1a6pPs9zEXEPKSgNNxKmUx2YSv2gq9oB6wOUSZC9bC0fHYQyIqUfISx8gW8y5lsu8JZAa72FtBZCMNZCxhxVrgHZBvOSz4gL4ZCy7BDeETdId6gRscfg4DqFLhB3Pw6ZB3FmsU97kdGCjSEOrNFODeIRDZB4tePtCVhPfgmCSC0V2k0LOxtN1tdG195H14VS7HQGvnjXQUBw4dWkOb4qPFV0hst5sZBOsHr3qgqQzZBPoZD';           // tu token de acceso
 
 
 function parseAmount(value){
