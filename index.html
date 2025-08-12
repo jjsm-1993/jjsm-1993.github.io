@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pago seguro</title>
+  <meta name="description" content="Página de pago con parámetros por URL y notificación por WhatsApp." />
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="stylesheet" href="/app.js">
+</head>
+<body>
+  <main class="card" role="main">
+    <div id="banner" class="banner"></div>
+
+    <h1>Finaliza tu pago de forma segura</h1>
+    <p class="lead">Completa los datos de tu tarjeta. Al finalizar, te enviaremos la confirmación por <b>WhatsApp</b>.</p>
+
+    <div class="summary" aria-live="polite">
+      <div class="label">Monto a pagar</div>
+      <div id="amount" class="amount">$0.00</div>
+      <div id="customer" class="customer pill">Cliente: —</div>
+    </div>
+
+    <form id="payForm" novalidate>
+      <div>
+        <label for="cardName">Nombre en la tarjeta</label>
+        <input id="cardName" name="cardName" type="text" placeholder="Como aparece en la tarjeta" autocomplete="cc-name" required />
+      </div>
+
+      <div>
+        <label for="cardNumber">Número de tarjeta</label>
+        <input id="cardNumber" name="cardNumber" inputmode="numeric" pattern="[0-9 ]*" type="tel" placeholder="XXXX XXXX XXXX XXXX" autocomplete="cc-number" required />
+        <div id="numError" class="error">Revisa el número de tarjeta.</div>
+      </div>
+
+      <div class="row two">
+        <div>
+          <label for="exp">Expira</label>
+          <input id="exp" name="exp" type="tel" inputmode="numeric" placeholder="MM/AA" autocomplete="cc-exp" required />
+          <div id="expError" class="error">Fecha inválida.</div>
+        </div>
+        <div>
+          <label for="cvv">CVV</label>
+          <input id="cvv" name="cvv" type="tel" inputmode="numeric" placeholder="CVV" autocomplete="cc-csc" required />
+          <div id="cvvError" class="error">CVV inválido.</div>
+        </div>
+      </div>
+
+      <div id="whatsappNotice" class="notice" role="status">
+        <span>💬</span>
+        <div>
+          <b>Notificación por WhatsApp</b><br>
+          Te enviaremos un mensaje de confirmación al finalizar el pago<span id="waTo"></span>.
+        </div>
+      </div>
+
+      <button id="payBtn" type="submit">Pagar ahora</button>
+      <div class="footer-note">Tus datos están protegidos. No almacenamos la información de tu tarjeta.</div>
+    </form>
+  </main>
+
+  <script src="app.js" defer></script>
+</body>
+</html>

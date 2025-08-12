@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pago exitoso</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .check{ width:88px; height:88px; border-radius:999px; display:grid; place-items:center; margin:8px auto 14px; background:#ecfdf5; border:2px solid #bbf7d0; color:#16a34a; font-size:46px; }
+    .actions{ display:flex; gap:10px; justify-content:center; margin-top:16px; flex-wrap:wrap; }
+    .btn{ padding:12px 16px; border-radius:12px; border:1px solid #e2e8f0; background:#fff; cursor:pointer; font-weight:600; text-decoration:none; color:#0f172a; }
+    .btn-primary{ border:none; background: linear-gradient(180deg, var(--primary), var(--primary-600)); color:#fff; }
+  </style>
+</head>
+<body>
+  <main class="card" role="main">
+    <div class="check" aria-hidden="true">✓</div>
+    <h1 id="greeting">¡Pago realizado con éxito!</h1>
+    <p class="lead" id="lead">Hemos confirmado tu pago. En breve recibirás un mensaje por <b>WhatsApp</b> con el comprobante.</p>
+
+    <div class="summary">
+      <div class="label">Monto pagado</div>
+      <div id="amount" class="amount">—</div>
+      <div id="customer" class="customer pill">Cliente: —</div>
+    </div>
+
+    <div class="footer-note">¡Gracias por tu compra!</div>
+  </main>
+
+  <script>
+    // Utilidades
+    const qs = new URLSearchParams(location.search);
+    function getParam(n, def=''){ const v = qs.get(n); return v!==null && v!=='' ? v : def; }
+    function parseAmount(value){ let s = String(value||'').trim(); if(!s) return 0; s=s.replace(/\s/g,''); const hasComma=s.includes(','); const hasDot=s.includes('.'); if(hasComma && !hasDot){ s=s.replace(/\./g,''); s=s.replace(',', '.'); } else if(hasComma && hasDot){ if(s.lastIndexOf(',')>s.lastIndexOf('.')){ s=s.replace(/\./g,''); s=s.replace(',', '.'); } else { s=s.replace(/,/g,''); } } else { s=s.replace(/,/g,''); } const n=Number(s); return isNaN(n)?0:n; }
+    function formatCurrency(value, currency){ const num=parseAmount(value); const cur=(currency||getParam('currency','CRC')).toUpperCase(); const locales={ CRC:'es-CR', MXN:'es-MX', USD:'en-US', EUR:'es-ES' }; return new Intl.NumberFormat(locales[cur]||'es-CR',{ style:'currency', currency:cur, minimumFractionDigits:2 }).format(num||0); }
+
+    // Lee parámetros de la URL
+    const cliente = getParam('cliente');
+    const ventaId = getParam('ventaId');
+    const monto   = getParam('monto');
+    const currency= getParam('currency','CRC');
+    const telefono= getParam('telefono');
+
+    // Pinta datos
+    const amountEl = document.getElementById('amount');
+    const saleIdEl = document.getElementById('saleId');
+    const customerEl = document.getElementById('customer');
+    const greetingEl = document.getElementById('greeting');
+    const leadEl = document.getElementById('lead');
+
+    amountEl.textContent = formatCurrency(monto, currency);
+    saleIdEl.textContent = ventaId || '—';
+    customerEl.textContent = 'Cliente: ' + (cliente || '—');
+
+    if (cliente){
+      greetingEl.textContent = '¡Gracias, ' + cliente + '!';
+      leadEl.innerHTML = 'Tu pago se procesó con éxito. En breve recibirás un mensaje por <b>WhatsApp</b> con la confirmación.';
+    }
+  </script>
+</body>
+</html>
