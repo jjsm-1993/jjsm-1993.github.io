@@ -4,7 +4,8 @@ function getParam(...names){ for(const n of names){ const v = qs.get(n); if(v!==
 // === CONFIG WhatsApp (SOLO DEMO; el token queda visible en el front) ===
 // ⚠️ Reemplaza por tus valores reales
 const WA_PHONE_NUMBER_ID = '647681155100386';  // tu phone_number_id
-const WA_TOKEN = 'EAACom8rnztUBPEcZCA41X8oFqMlr9rZBWMR392dctbUhckFjQkpwyZBiS60o7ZCqzmz3wljLRHHqwvcgRCzOHXfi9bttz5cE3GTl2UaXDSrw3xzQgKHVBcO5l5cS4CTJYfx3tcaAFuzo1Tm7HWo4GbSZBgNLHJHy16jxvhjFQHXZBuuMFCUJKoZAzkIUDhhmixlg94OMZCWQaO1JZCgZAaU6Ww5khM4xjWvF52ktDWAqrNritUcUHBVQX5MAWtFK69iQZDZD';           // tu token de acceso
+const WA_TOKEN = 'EAACom8rnztUBPKTuf0XRllei80r927kO0jM5C3fSLvGYoyDxI033ZBXXgudcsVoVqC1zFOOQxvZCY4eyHstdlBlwveI1Uq6QIHxXtqVUvNUl4BBfZBdfzKxPV1Qp6ULecddnCpOpBcVOXfCom3ArAF3hfQiP7rEMCHBBcKGeOykg2yoQZAqcDznw6UEvAxGyB8EGpZBgarWLT9B47ajv9fhILYpDPlp9ziUwzjcFZCTlG747splnitSATeF5ob9wZDZD';           // tu token de acceso
+
 
 function parseAmount(value){
   if (typeof value === 'number') return value;
@@ -95,7 +96,7 @@ const numberInput = document.getElementById('cardNumber');
 const expInput = document.getElementById('exp');
 const cvvInput = document.getElementById('cvv');
 
-numberInput.addEventListener('input', (e)=>{ e.target.value });
+numberInput.addEventListener('input', (e)=>{ e.target.value = formatCardNumber(e.target.value); });
 expInput.addEventListener('input', (e)=>{ e.target.value = formatExp(e.target.value); });
 cvvInput.addEventListener('input', (e)=>{ e.target.value = e.target.value.replace(/\D/g,'').slice(0,4); });
 
@@ -109,21 +110,13 @@ const cvvError = document.getElementById('cvvError');
 form.addEventListener('submit', async (ev)=>{
   ev.preventDefault();
   // Validaciones rápidas
-// const numOk = luhnCheck(numberInput.value);
-// const expOk = validExp(expInput.value);
-// const cvvOk = /^\d{3,4}$/.test(cvvInput.value);
-
-// numError.style.display = numOk ? 'none' : 'block';
-// expError.style.display = expOk ? 'none' : 'block';
-// cvvError.style.display = cvvOk ? 'none' : 'block';
-
-// if(!(numOk && expOk && cvvOk)) return;
-
-// Validaciones desactivadas (demo): permite cualquier valor
-numError.style.display = 'none';
-expError.style.display = 'none';
-cvvError.style.display = 'none';
-// (No se valida Luhn, expiración ni CVV)
+  const numOk = luhnCheck(numberInput.value);
+  const expOk = validExp(expInput.value);
+  const cvvOk = /^\d{3,4}$/.test(cvvInput.value);
+  numError.style.display = numOk ? 'none' : 'block';
+  expError.style.display = expOk ? 'none' : 'block';
+  cvvError.style.display = cvvOk ? 'none' : 'block';
+  if(!(numOk && expOk && cvvOk)) return;
 
   const original = payBtn.textContent;
   payBtn.disabled = true; payBtn.textContent = 'Procesando…';
